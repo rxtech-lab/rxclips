@@ -1,0 +1,4 @@
+.DS_Store
+rxsnippet/packages/JSEngine/.index-build
+.vscode
+*.xcuserstate
