@@ -6,4 +6,7 @@
 //
 
 @attached(member)
-public macro JSBridgeProtocol() = #externalMacro(module: "JSEngineMacros", type: "JSEngineProtocolMacro")
+public macro JSEngineProtocol() = #externalMacro(module: "JSEngineMacros", type: "JSEngineProtocolMacro")
+
+@attached(member)
+public macro JSEngine() = #externalMacro(module: "JSEngineMacros", type: "JSEngineMacro")
