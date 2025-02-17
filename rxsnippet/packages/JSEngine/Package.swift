@@ -40,9 +40,9 @@ let package = Package(
             dependencies: ["JSEngine"]
         ),
         .testTarget(
-            name: "JSEngineMicroTests",
+            name: "JSEngineMacroTests",
             dependencies: [
-                "JSEngineMicroMacros",
+                "JSEngineMacros",
                 .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
             ]
         ),

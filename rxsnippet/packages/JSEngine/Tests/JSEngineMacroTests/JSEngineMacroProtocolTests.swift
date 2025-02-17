@@ -12,44 +12,104 @@ import SwiftSyntaxMacrosTestSupport
 import XCTest
 
 // Macro implementations build for the host, so the corresponding module is not available when cross-compiling. Cross-compiled tests may still make use of the macro itself in end-to-end tests.
-#if canImport(JSEngineMicroMacros)
-import JSEngineMicroMacros
+#if canImport(JSEngineMacros)
+    import JSEngineMacros
 
-let testMacros: [String: Macro.Type] = [
-    "stringify": StringifyMacro.self,
-]
+    let testMacros: [String: Macro.Type] = [
+        "JSBridgeProtocol": JSEngineProtocolMacro.self
+    ]
 #endif
 
-final class JSEngineMicroTests: XCTestCase {
-    func testMacro() throws {
-        #if canImport(JSEngineMicroMacros)
-        assertMacroExpansion(
-            """
-            #stringify(a + b)
-            """,
-            expandedSource: """
-            (a + b, "a + b")
-            """,
-            macros: testMacros
-        )
+final class JSEngineMacroProtocolTests: XCTestCase {
+    func testMacroWithoutParameters() throws {
+        #if canImport(JSEngineMacros)
+            assertMacroExpansion(
+                """
+                @JSBridgeProtocol
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func openFolder() async throws -> String
+                }
+                """,
+                expandedSource: """
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func openFolder() async throws -> String
+
+                    func openFolder() -> JSValue
+                }
+                """,
+                macros: testMacros
+            )
         #else
-        throw XCTSkip("macros are only supported when running tests for the host platform")
+            throw XCTSkip("macros are only supported when running tests for the host platform")
         #endif
     }
 
-    func testMacroWithStringLiteral() throws {
-        #if canImport(JSEngineMicroMacros)
-        assertMacroExpansion(
-            #"""
-            #stringify("Hello, \(name)")
-            """#,
-            expandedSource: #"""
-            ("Hello, \(name)", #""Hello, \(name)""#)
-            """#,
-            macros: testMacros
-        )
+    func testMacroWithParameters() throws {
+        #if canImport(JSEngineMacros)
+            assertMacroExpansion(
+                """
+                @JSBridgeProtocol
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func openFolder(name: String) async throws -> String
+                }
+                """,
+                expandedSource: """
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func openFolder(name: String) async throws -> String
+
+                    func openFolder(name: String) -> JSValue
+                }
+                """,
+                macros: testMacros
+            )
         #else
-        throw XCTSkip("macros are only supported when running tests for the host platform")
+            throw XCTSkip("macros are only supported when running tests for the host platform")
+        #endif
+    }
+
+    func testMacroWithoutAsync() throws {
+        #if canImport(JSEngineMacros)
+            assertMacroExpansion(
+                """
+                @JSBridgeProtocol
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func openFolder() -> String
+                }
+                """,
+                expandedSource: """
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func openFolder() -> String
+                }
+                """,
+                macros: testMacros
+            )
+        #else
+            throw XCTSkip("macros are only supported when running tests for the host platform")
+        #endif
+    }
+
+    func testMacroWithoutAsyncAndWithAsync() throws {
+        #if canImport(JSEngineMacros)
+            assertMacroExpansion(
+                """
+                @JSBridgeProtocol
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func openFolder() -> String
+                    func openFolder2() async throws -> String
+                }
+                """,
+                expandedSource: """
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func openFolder() -> String
+                    func openFolder2() async throws -> String
+                
+                    func openFolder2() -> JSValue
+                }
+                """,
+                macros: testMacros
+            )
+        #else
+            throw XCTSkip("macros are only supported when running tests for the host platform")
         #endif
     }
 }
