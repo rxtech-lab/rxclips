@@ -90,6 +90,11 @@ public struct JSEngine<Api: APIProtocol & JSExport> {
                 throw JSEngineError.typeConversionFailed
             }
         default:
+            if let anyClass = T.self as? AnyClass {
+                if let instance = jsValue.toObjectOf(anyClass) {
+                    return instance as! T
+                }
+            }
             throw JSEngineError.typeConversionFailed
         }
     }

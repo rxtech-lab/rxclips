@@ -36,6 +36,18 @@ public struct JSBridgeProtocolMacro: MemberMacro {
 
             // Only process functions that are async
             if funcDecl.signature.effectSpecifiers?.asyncSpecifier == nil {
+                // For non-async functions, check if all parameters have external name "_"
+                let allParamsUnderscored = funcDecl.signature.parameterClause.parameters.allSatisfy
+                {
+                    param in
+                    param.firstName.text == "_"
+                }
+
+                // Skip if all parameters are already underscored
+                if allParamsUnderscored {
+                    continue
+                }
+
                 // For non-async functions, only generate if there are parameters
                 if funcDecl.signature.parameterClause.parameters.isEmpty {
                     continue
