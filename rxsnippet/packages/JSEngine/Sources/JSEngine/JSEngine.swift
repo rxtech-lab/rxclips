@@ -1,12 +1,12 @@
 import Common
 import JavaScriptCore
 
-public struct JSEngine {
-    private let apiHandler: APIProtocol
+public struct JSEngine<Api: APIProtocol & JSExport> {
+    private let apiType: Api.Type
     public init(
-        apiHandler: APIProtocol
+        apiHandler: Api.Type
     ) {
-        self.apiHandler = apiHandler
+        self.apiType = apiHandler
     }
 
     private func setupContextWithGlobals() throws -> JSContext {
@@ -98,6 +98,7 @@ public struct JSEngine {
         let context = try setupContextWithGlobals()
 
         context.evaluateScript(code)
+        let apiHandler = apiType.init(context: context)
         // Get the handle function from the global scope
         guard let handleFunc = context.globalObject?.objectForKeyedSubscript("handle") else {
             throw JSEngineError.functionNotFound
