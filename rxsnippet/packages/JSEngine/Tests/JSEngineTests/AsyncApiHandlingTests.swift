@@ -27,6 +27,10 @@ class TestApi: NSObject, TestApiProtocol {
     func getName(name: String) -> String {
         return name
     }
+
+    func getDefaultName(_ parameter: String) -> String {
+        return parameter
+    }
 }
 
 @Suite("Async API Handling")
@@ -54,6 +58,18 @@ struct AsyncApiHandlingTests {
         let code = """
         async function handle(api) {
          const name = await api.getName("Hi");
+         return name
+        }
+        """
+
+        let result: String = try await engine.execute(code: code)
+        #expect(result == "Hi")
+    }
+
+    @Test func simpleAsyncApiTest3() async throws {
+        let code = """
+        async function handle(api) {
+         const name = await api.getDefaultName("Hi");
          return name
         }
         """

@@ -214,4 +214,21 @@ final class JSEngineMacroProtocolTests: XCTestCase {
             macros: testMacros
         )
     }
+
+    func testMacroWithExternalWithAllUnNamedParameter() throws {
+        assertMacroExpansion(
+            """
+            @JSBridgeProtocol
+            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                func getName(_: String) -> String
+            }
+            """,
+            expandedSource: """
+            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                func getName(_: String) -> String
+            }
+            """,
+            macros: testMacros
+        )
+    }
 }
