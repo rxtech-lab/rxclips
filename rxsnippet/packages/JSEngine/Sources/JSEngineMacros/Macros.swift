@@ -10,7 +10,7 @@ import SwiftSyntaxMacros
 @main
 struct JSEngineMicroPlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
-        JSEngineProtocolMacro.self,
-        JSEngineMacro.self
+        JSBridgeMacro.self,
+        JSBridgeProtocolMacro.self
     ]
 }

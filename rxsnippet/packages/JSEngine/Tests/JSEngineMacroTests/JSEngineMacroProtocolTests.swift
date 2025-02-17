@@ -13,14 +13,14 @@ import SwiftSyntaxMacrosTestSupport
 import XCTest
 
 private let testMacros: [String: Macro.Type] = [
-    "JSEngineProtocol": JSEngineProtocolMacro.self
+    "JSBridgeProtocol": JSBridgeProtocolMacro.self
 ]
 
 final class JSEngineMacroProtocolTests: XCTestCase {
     func testMacroWithoutParameters() throws {
         assertMacroExpansion(
             """
-            @JSEngineProtocol
+            @JSBridgeProtocol
             @objc public protocol TestApiProtocol: JSExport, APIProtocol {
                 func openFolder() async throws -> String
             }
@@ -39,7 +39,7 @@ final class JSEngineMacroProtocolTests: XCTestCase {
     func testMacroWithParameters() throws {
         assertMacroExpansion(
             """
-            @JSEngineProtocol
+            @JSBridgeProtocol
             @objc public protocol TestApiProtocol: JSExport, APIProtocol {
                 func openFolder(name: String) async throws -> String
             }
@@ -48,7 +48,7 @@ final class JSEngineMacroProtocolTests: XCTestCase {
             @objc public protocol TestApiProtocol: JSExport, APIProtocol {
                 func openFolder(name: String) async throws -> String
 
-                func openFolder(name: String) -> JSValue
+                func openFolder(_: String) -> JSValue
             }
             """,
             macros: testMacros
@@ -58,14 +58,16 @@ final class JSEngineMacroProtocolTests: XCTestCase {
     func testMacroWithoutAsync() throws {
         assertMacroExpansion(
             """
-            @JSEngineProtocol
+            @JSBridgeProtocol
             @objc public protocol TestApiProtocol: JSExport, APIProtocol {
-                func openFolder() -> String
+                func openFolder(name: String) -> String
             }
             """,
             expandedSource: """
             @objc public protocol TestApiProtocol: JSExport, APIProtocol {
-                func openFolder() -> String
+                func openFolder(name: String) -> String
+
+                func openFolder(_: String) -> String
             }
             """,
             macros: testMacros
@@ -75,7 +77,7 @@ final class JSEngineMacroProtocolTests: XCTestCase {
     func testMacroWithoutAsyncAndWithAsync() throws {
         assertMacroExpansion(
             """
-            @JSEngineProtocol
+            @JSBridgeProtocol
             @objc public protocol TestApiProtocol: JSExport, APIProtocol {
                 func openFolder() -> String
                 func openFolder2() async throws -> String
@@ -96,18 +98,119 @@ final class JSEngineMacroProtocolTests: XCTestCase {
     func testMacroOnClass() throws {
         assertMacroExpansion(
             """
-            @JSEngineProtocol
+            @JSBridgeProtocol
             class TestApiClass: NSObject {
 
             }
-            """, expandedSource: """
+            """,
+            expandedSource: """
             class TestApiClass: NSObject {
 
             }
             """,
             diagnostics: [
-                .init(message: "JSEngineProtocolMacro must be applied to a protocol", line: 1, column: 1)
+                .init(
+                    message: "JSEngineProtocolMacro must be applied to a protocol", line: 1,
+                    column: 1
+                )
             ],
+            macros: testMacros
+        )
+    }
+
+    func testMacroWithNamedParameters() throws {
+        assertMacroExpansion(
+            """
+            @JSBridgeProtocol
+            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                func openFolder(fileName: String, path: String) async throws -> String
+            }
+            """,
+            expandedSource: """
+            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                func openFolder(fileName: String, path: String) async throws -> String
+
+                func openFolder(_: String, _: String) -> JSValue
+            }
+            """,
+            macros: testMacros
+        )
+    }
+
+    func testMacroWithoutAsyncNoParameters() throws {
+        assertMacroExpansion(
+            """
+            @JSBridgeProtocol
+            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                func openFolder() -> String
+            }
+            """,
+            expandedSource: """
+            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                func openFolder() -> String
+            }
+            """,
+            macros: testMacros
+        )
+    }
+
+    func testMacroWithAsyncNoParameters() throws {
+        assertMacroExpansion(
+            """
+            @JSBridgeProtocol
+            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                func openFolder() async throws -> String
+            }
+            """,
+            expandedSource: """
+            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                func openFolder() async throws -> String
+
+                func openFolder() -> JSValue
+            }
+            """,
+            macros: testMacros
+        )
+    }
+
+    func testMacroWithNamedParameter() throws {
+        assertMacroExpansion(
+            """
+            @JSBridgeProtocol
+            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                func openFolder() async throws -> String
+                func getName(name: String) -> String
+            }
+            """,
+            expandedSource: """
+            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                func openFolder() async throws -> String
+                func getName(name: String) -> String
+
+                func openFolder() -> JSValue
+
+                func getName(_: String) -> String
+            }
+            """,
+            macros: testMacros
+        )
+    }
+
+    func testMacroWithExternalNamedParameter() throws {
+        assertMacroExpansion(
+            """
+            @JSBridgeProtocol
+            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                func getName(with name: String) -> String
+            }
+            """,
+            expandedSource: """
+            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                func getName(with name: String) -> String
+
+                func getName(_ name: String) -> String
+            }
+            """,
             macros: testMacros
         )
     }

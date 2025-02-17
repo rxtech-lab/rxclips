@@ -37,7 +37,7 @@ let package = Package(
         ),
         .testTarget(
             name: "JSEngineTests",
-            dependencies: ["JSEngine"]
+            dependencies: ["JSEngine", "JSEngineMacro"]
         ),
         .testTarget(
             name: "JSEngineMacroTests",

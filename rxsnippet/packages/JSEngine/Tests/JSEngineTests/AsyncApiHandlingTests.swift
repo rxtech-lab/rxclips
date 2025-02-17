@@ -3,12 +3,15 @@ import JavaScriptCore
 import Testing
 
 @testable import JSEngine
+import JSEngineMacro
 
+@JSBridgeProtocol
 @objc public protocol TestApiProtocol: JSExport, APIProtocol {
-    func openFolder() -> JSValue
     func openFolder() async throws -> String
+    func getName(name: String) -> String
 }
 
+@JSBridge
 class TestApi: NSObject, TestApiProtocol {
     let context: JSContext
 
@@ -17,41 +20,12 @@ class TestApi: NSObject, TestApiProtocol {
         super.init()
     }
 
-    private func resolvePromise(with value: String) {
-        context.globalObject.setObject(value, forKeyedSubscript: "folderPath" as NSString)
-        context.evaluateScript("resolveOpenFolder(folderPath);")
-    }
-
-    private func rejectPromise(with error: Error) {
-        context.globalObject.setObject(
-            error.localizedDescription, forKeyedSubscript: "errorMessage" as NSString)
-        context.evaluateScript("rejectOpenFolder(new Error(errorMessage));")
-    }
-
-    func openFolder() -> JSValue {
-        let promise = context.evaluateScript(
-            """
-                new Promise((resolve, reject) => {
-                    globalThis.resolveOpenFolder = resolve;
-                    globalThis.rejectOpenFolder = reject;
-                });
-            """)!
-
-        // Start async task
-        Task {
-            do {
-                let result: String = try await openFolder()
-                resolvePromise(with: result)
-            } catch {
-                rejectPromise(with: error)
-            }
-        }
-
-        return promise
-    }
-
     func openFolder() async throws -> String {
         return "/path/to/folder"
+    }
+
+    func getName(name: String) -> String {
+        return name
     }
 }
 
@@ -74,5 +48,17 @@ struct AsyncApiHandlingTests {
 
         let result: String = try await engine.execute(code: code)
         #expect(result == "/path/to/folder")
+    }
+
+    @Test func simpleAsyncApiTest2() async throws {
+        let code = """
+        async function handle(api) {
+         const name = await api.getName("Hi");
+         return name
+        }
+        """
+
+        let result: String = try await engine.execute(code: code)
+        #expect(result == "Hi")
     }
 }
