@@ -55,14 +55,9 @@ public struct JSBridgeMacro: MemberMacro {
 
         // Get return type
         let returnType = funcDecl.signature.returnClause?.type
-        guard let returnType = returnType else {
-            context.addDiagnostics(from: MacroError.missingReturnType, node: funcDecl)
-            return []
-        }
-
         // Create the wrapper function
         let wrapperFunction = """
-            func \(functionName)(\(unnamedParameterList)) -> \(returnType){
+            func \(functionName)(\(unnamedParameterList)) -> \(returnType ?? "Void"){
                 return \(functionName)(\(argumentList))
             }
             """
@@ -112,19 +107,13 @@ public struct JSBridgeMacro: MemberMacro {
                 return "\(externalName): \(internalName)"
             }.joined(separator: ", ")
 
-            let returnType = funcDecl.signature.returnClause?.type
-
-            guard var returnType = returnType else {
-                context.addDiagnostics(from: MacroError.missingReturnType, node: node)
-                return []
-            }
-
-            returnType.trailingTrivia = .spaces(0)
+            var returnType = funcDecl.signature.returnClause?.type
+            returnType?.trailingTrivia = .spaces(0)
 
             // Add resolve helper
             let resolveHelper = try FunctionDeclSyntax(
                 """
-                private func resolve\(raw: functionName.capitalized)(with value: \(raw: returnType)) {
+                private func resolve\(raw: functionName.capitalized)(with value: \(raw: returnType ?? "Void")) {
                     context.globalObject.setObject(value, forKeyedSubscript: "\(raw: functionName)Result" as NSString)
                     context.evaluateScript("resolve\(raw: functionName.capitalized)(\(raw: functionName)Result);")
                 }

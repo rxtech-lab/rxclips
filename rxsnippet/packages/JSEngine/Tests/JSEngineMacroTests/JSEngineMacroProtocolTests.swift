@@ -26,12 +26,12 @@ final class JSEngineMacroProtocolTests: XCTestCase {
             }
             """,
             expandedSource: """
-            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
-                func openFolder() async throws -> String
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func openFolder() async throws -> String
 
-                func openFolder() -> JSValue
-            }
-            """,
+                    func openFolder() -> JSValue
+                }
+                """,
             macros: testMacros
         )
     }
@@ -45,12 +45,12 @@ final class JSEngineMacroProtocolTests: XCTestCase {
             }
             """,
             expandedSource: """
-            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
-                func openFolder(name: String) async throws -> String
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func openFolder(name: String) async throws -> String
 
-                func openFolder(_: String) -> JSValue
-            }
-            """,
+                    func openFolder(_: String) -> JSValue
+                }
+                """,
             macros: testMacros
         )
     }
@@ -64,12 +64,12 @@ final class JSEngineMacroProtocolTests: XCTestCase {
             }
             """,
             expandedSource: """
-            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
-                func openFolder(name: String) -> String
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func openFolder(name: String) -> String
 
-                func openFolder(_: String) -> String
-            }
-            """,
+                    func openFolder(_: String) -> String
+                }
+                """,
             macros: testMacros
         )
     }
@@ -84,13 +84,13 @@ final class JSEngineMacroProtocolTests: XCTestCase {
             }
             """,
             expandedSource: """
-            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
-                func openFolder() -> String
-                func openFolder2() async throws -> String
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func openFolder() -> String
+                    func openFolder2() async throws -> String
 
-                func openFolder2() -> JSValue
-            }
-            """,
+                    func openFolder2() -> JSValue
+                }
+                """,
             macros: testMacros
         )
     }
@@ -104,10 +104,10 @@ final class JSEngineMacroProtocolTests: XCTestCase {
             }
             """,
             expandedSource: """
-            class TestApiClass: NSObject {
+                class TestApiClass: NSObject {
 
-            }
-            """,
+                }
+                """,
             diagnostics: [
                 .init(
                     message: "JSEngineProtocolMacro must be applied to a protocol", line: 1,
@@ -127,12 +127,12 @@ final class JSEngineMacroProtocolTests: XCTestCase {
             }
             """,
             expandedSource: """
-            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
-                func openFolder(fileName: String, path: String) async throws -> String
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func openFolder(fileName: String, path: String) async throws -> String
 
-                func openFolder(_: String, _: String) -> JSValue
-            }
-            """,
+                    func openFolder(_: String, _: String) -> JSValue
+                }
+                """,
             macros: testMacros
         )
     }
@@ -146,10 +146,10 @@ final class JSEngineMacroProtocolTests: XCTestCase {
             }
             """,
             expandedSource: """
-            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
-                func openFolder() -> String
-            }
-            """,
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func openFolder() -> String
+                }
+                """,
             macros: testMacros
         )
     }
@@ -163,12 +163,12 @@ final class JSEngineMacroProtocolTests: XCTestCase {
             }
             """,
             expandedSource: """
-            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
-                func openFolder() async throws -> String
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func openFolder() async throws -> String
 
-                func openFolder() -> JSValue
-            }
-            """,
+                    func openFolder() -> JSValue
+                }
+                """,
             macros: testMacros
         )
     }
@@ -183,15 +183,15 @@ final class JSEngineMacroProtocolTests: XCTestCase {
             }
             """,
             expandedSource: """
-            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
-                func openFolder() async throws -> String
-                func getName(name: String) -> String
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func openFolder() async throws -> String
+                    func getName(name: String) -> String
 
-                func openFolder() -> JSValue
+                    func openFolder() -> JSValue
 
-                func getName(_: String) -> String
-            }
-            """,
+                    func getName(_: String) -> String
+                }
+                """,
             macros: testMacros
         )
     }
@@ -205,12 +205,12 @@ final class JSEngineMacroProtocolTests: XCTestCase {
             }
             """,
             expandedSource: """
-            @objc public protocol TestApiProtocol: JSExport, APIProtocol {
-                func getName(with name: String) -> String
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func getName(with name: String) -> String
 
-                func getName(_ name: String) -> String
-            }
-            """,
+                    func getName(_ name: String) -> String
+                }
+                """,
             macros: testMacros
         )
     }
@@ -224,10 +224,27 @@ final class JSEngineMacroProtocolTests: XCTestCase {
             }
             """,
             expandedSource: """
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func getName(_: String) -> String
+                }
+                """,
+            macros: testMacros
+        )
+    }
+
+    func testMacroOnFunctionWithoutReturnType() throws {
+        assertMacroExpansion(
+            """
+            @JSBridgeProtocol
             @objc public protocol TestApiProtocol: JSExport, APIProtocol {
-                func getName(_: String) -> String
+                func voidFunction()
             }
             """,
+            expandedSource: """
+                @objc public protocol TestApiProtocol: JSExport, APIProtocol {
+                    func voidFunction()
+                }
+                """,
             macros: testMacros
         )
     }

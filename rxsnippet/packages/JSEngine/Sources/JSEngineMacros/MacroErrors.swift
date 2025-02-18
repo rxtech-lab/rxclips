@@ -7,5 +7,4 @@
 
 public enum MacroError: Error {
     case invalidDeclaration
-    case missingReturnType
 }
