@@ -2,9 +2,9 @@ import Common
 import JavaScriptCore
 
 public struct JSEngine<Api: APIProtocol & JSExport> {
-    private let apiType: Api.Type
+    private let apiType: Api
     public init(
-        apiHandler: Api.Type
+        apiHandler: Api
     ) {
         self.apiType = apiHandler
     }
@@ -103,13 +103,13 @@ public struct JSEngine<Api: APIProtocol & JSExport> {
         let context = try setupContextWithGlobals()
 
         context.evaluateScript(code)
-        let apiHandler = apiType.init(context: context)
+        apiType.initializeJSExport(context: context)
         // Get the handle function from the global scope
         guard let handleFunc = context.globalObject?.objectForKeyedSubscript("handle") else {
             throw JSEngineError.functionNotFound
         }
 
-        let result = try await handleFunc.call(withArguments: [apiHandler])
+        let result = try await handleFunc.call(withArguments: [apiType])
         print("Result from async function:", result?.toString() ?? "No result")
 
         return try mapJSValueToSwiftType(result)

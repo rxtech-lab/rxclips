@@ -32,6 +32,7 @@
 		DF38B76E2D61A11000048BC7 /* rxsnippet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rxsnippet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF38B77F2D61A11100048BC7 /* rxsnippetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rxsnippetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF38B7892D61A11100048BC7 /* rxsnippetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rxsnippetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFD386062D636BF300E51243 /* rxsnippet.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = rxsnippet.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -95,6 +96,7 @@
 		DF38B7652D61A11000048BC7 = {
 			isa = PBXGroup;
 			children = (
+				DFD386062D636BF300E51243 /* rxsnippet.xctestplan */,
 				DF38B7702D61A11000048BC7 /* rxsnippet */,
 				DF38B7822D61A11100048BC7 /* rxsnippetTests */,
 				DF38B78C2D61A11100048BC7 /* rxsnippetUITests */,
