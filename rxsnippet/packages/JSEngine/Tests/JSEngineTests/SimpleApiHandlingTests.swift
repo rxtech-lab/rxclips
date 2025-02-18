@@ -44,7 +44,7 @@ private struct SimpleApiHandlingTests {
         }
         """
 
-        let result: String = try await engine.execute(code: code)
+        let result: String = try await engine.execute(code: code, functionName: "handle")
         #expect(result == "ok")
     }
 }

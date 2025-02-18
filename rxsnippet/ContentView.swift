@@ -25,7 +25,7 @@ struct ContentView: View {
             if let fileContent = fileContent {
                 Button("Run") {
                     Task {
-                        let result: String = try! await engine.jsEngine!.execute(code: fileContent)
+                        let result: String = try! await engine.jsEngine!.execute(code: fileContent, functionName: "handle")
                         print(result)
                     }
                 }

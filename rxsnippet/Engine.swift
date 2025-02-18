@@ -15,6 +15,7 @@ import SwiftUI
 @JSBridgeProtocol
 @objc protocol TestApiProtocol: JSExport, APIProtocol {
     func setEditorColor(color: String) -> String
+    func openFolder() async throws -> String
 }
 
 @JSBridge
@@ -34,6 +35,23 @@ import SwiftUI
     func setEditorColor(color: String) -> String {
         editorColor = Color(hex: color)
         return color
+    }
+
+    @MainActor
+    func openFolder() async throws -> String {
+        return await withCheckedContinuation { continuation in
+            let panel = NSOpenPanel()
+            panel.canChooseFiles = false
+            panel.canChooseDirectories = true
+            panel.allowsMultipleSelection = false
+            panel.begin { response in
+                if response == .OK {
+                    continuation.resume(returning: panel.url!.path)
+                } else {
+                    continuation.resume(returning: "")
+                }
+            }
+        }
     }
 }
 
@@ -63,5 +81,3 @@ extension Color {
         )
     }
 }
-
-extension Engine {}
