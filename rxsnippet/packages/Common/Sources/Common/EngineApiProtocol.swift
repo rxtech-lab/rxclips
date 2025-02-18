@@ -2,5 +2,6 @@ import Foundation
 import JavaScriptCore
 
 @objc public protocol APIProtocol {
-    init(context: JSContext)
+    func initializeJSExport(context: JSContext)
+    var context: JSContext! { get }
 }

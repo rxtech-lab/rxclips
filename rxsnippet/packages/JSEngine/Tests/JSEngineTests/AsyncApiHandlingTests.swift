@@ -14,7 +14,7 @@ import JSEngineMacro
 }
 
 @JSBridgeProtocol
-@objc protocol TestApiProtocol: JSExport, APIProtocol {
+@objc private protocol TestApiProtocol: JSExport, APIProtocol {
     func openFolder() async throws -> String
     func getName(name: String) -> String
     func getDefaultName(_ parameter: String) -> String
@@ -22,13 +22,12 @@ import JSEngineMacro
 }
 
 @JSBridge
-class TestApi: NSObject, TestApiProtocol {
-    let context: JSContext
-
-    required init(context: JSContext) {
+private class TestApi: NSObject, TestApiProtocol {
+    func initializeJSExport(context: JSContext) -> Void {
         self.context = context
-        super.init()
     }
+
+    var context: JSContext!
 
     func openFolder() async throws -> String {
         return "/path/to/folder"
@@ -48,11 +47,11 @@ class TestApi: NSObject, TestApiProtocol {
 }
 
 @Suite("Async API Handling")
-struct AsyncApiHandlingTests {
+private struct AsyncApiHandlingTests {
     let engine: JSEngine<TestApi>
 
     init() {
-        engine = JSEngine<TestApi>(apiHandler: TestApi.self)
+        engine = JSEngine<TestApi>(apiHandler: TestApi())
     }
 
     @Test func simpleAsyncApiTest() async throws {
