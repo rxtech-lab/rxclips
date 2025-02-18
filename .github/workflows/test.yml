@@ -20,16 +20,6 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - name: Cache Swift packages
-        uses: actions/cache@v4
-        with:
-          path: |
-            rxsnippet/packages/**
-            ~/Library/Developer/Xcode/DerivedData/**/SourcePackages/checkouts
-          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
-          restore-keys: |
-            ${{ runner.os }}-spm-
-
       - name: Build the project and run tests
         run: |
           xcodebuild test \

@@ -70,14 +70,19 @@ public struct JSBridgeMacro: MemberMacro {
         providingMembersOf declaration: some DeclGroupSyntax,
         in context: some MacroExpansionContext
     ) throws -> [DeclSyntax] {
-        guard let classDecl = declaration.as(ClassDeclSyntax.self) else {
+        let memberBlock: MemberBlockSyntax
+        if let classDecl = declaration.as(ClassDeclSyntax.self) {
+            memberBlock = classDecl.memberBlock
+        } else if let extensionDecl = declaration.as(ExtensionDeclSyntax.self) {
+            memberBlock = extensionDecl.memberBlock
+        } else {
             context.addDiagnostics(from: MacroError.invalidDeclaration, node: node)
             return []
         }
 
         var newMembers: [DeclSyntax] = []
 
-        for member in classDecl.memberBlock.members {
+        for member in memberBlock.members {
             guard let funcDecl = member.decl.as(FunctionDeclSyntax.self) else {
                 continue
             }

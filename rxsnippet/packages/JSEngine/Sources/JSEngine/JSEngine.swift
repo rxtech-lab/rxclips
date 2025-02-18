@@ -99,13 +99,20 @@ public struct JSEngine<Api: APIProtocol & JSExport> {
         }
     }
 
-    public func execute<T>(code: String, withArguments: [Any] = []) async throws -> T {
+    /**
+        * Executes a JavaScript function asynchronously
+        - Parameters:
+            - code: The JavaScript code to evaluate
+            - functionName: The name of the function to call
+            - withArguments: The arguments to pass to the function
+     */
+    public func execute<T>(code: String, functionName: String, withArguments: [Any] = []) async throws -> T {
         let context = try setupContextWithGlobals()
 
         context.evaluateScript(code)
         apiType.initializeJSExport(context: context)
         // Get the handle function from the global scope
-        guard let handleFunc = context.globalObject?.objectForKeyedSubscript("handle") else {
+        guard let handleFunc = context.globalObject?.objectForKeyedSubscript(functionName) else {
             throw JSEngineError.functionNotFound
         }
 
