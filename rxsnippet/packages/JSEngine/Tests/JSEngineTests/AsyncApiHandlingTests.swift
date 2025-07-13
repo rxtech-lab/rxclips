@@ -63,7 +63,7 @@ private struct AsyncApiHandlingTests {
         }
         """
 
-        let result: String = try await engine.execute(code: code)
+        let result: String = try await engine.execute(code: code, functionName: "handle")
         #expect(result == "/path/to/folder")
     }
 
@@ -75,7 +75,7 @@ private struct AsyncApiHandlingTests {
         }
         """
 
-        let result: String = try await engine.execute(code: code)
+        let result: String = try await engine.execute(code: code, functionName: "handle")
         #expect(result == "Hi")
     }
 
@@ -87,7 +87,7 @@ private struct AsyncApiHandlingTests {
         }
         """
 
-        let result: String = try await engine.execute(code: code)
+        let result: String = try await engine.execute(code: code, functionName: "handle")
         #expect(result == "Hi")
     }
 
@@ -99,7 +99,7 @@ private struct AsyncApiHandlingTests {
         }
         """
 
-        let result: CustomType = try await engine.execute(code: code)
+        let result: CustomType = try await engine.execute(code: code, functionName: "handle")
         #expect(result.value == "CustomType")
     }
 }
