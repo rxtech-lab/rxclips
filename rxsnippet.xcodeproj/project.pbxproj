@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		DF07EC122E265A32003ED2C1 /* JSONSchemaForm in Frameworks */ = {isa = PBXBuildFile; productRef = DF07EC112E265A32003ED2C1 /* JSONSchemaForm */; };
+		DF07EC152E265A4A003ED2C1 /* JSEngine in Frameworks */ = {isa = PBXBuildFile; productRef = DF07EC142E265A4A003ED2C1 /* JSEngine */; };
+		DF07EC172E265A4A003ED2C1 /* JSEngineMacro in Frameworks */ = {isa = PBXBuildFile; productRef = DF07EC162E265A4A003ED2C1 /* JSEngineMacro */; };
+		DF07EC192E265A4A003ED2C1 /* RxClipsCore in Frameworks */ = {isa = PBXBuildFile; productRef = DF07EC182E265A4A003ED2C1 /* RxClipsCore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		DF38B7802D61A11100048BC7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,7 +34,6 @@
 		DF38B76E2D61A11000048BC7 /* rxsnippet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rxsnippet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF38B77F2D61A11100048BC7 /* rxsnippetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rxsnippetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF38B7892D61A11100048BC7 /* rxsnippetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rxsnippetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DFD386062D636BF300E51243 /* rxsnippet.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = rxsnippet.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -53,6 +59,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF07EC172E265A4A003ED2C1 /* JSEngineMacro in Frameworks */,
+				DF07EC192E265A4A003ED2C1 /* RxClipsCore in Frameworks */,
+				DF07EC122E265A32003ED2C1 /* JSONSchemaForm in Frameworks */,
+				DF07EC152E265A4A003ED2C1 /* JSEngine in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,7 +86,6 @@
 		DF38B7652D61A11000048BC7 = {
 			isa = PBXGroup;
 			children = (
-				DFD386062D636BF300E51243 /* rxsnippet.xctestplan */,
 				DF38B7702D61A11000048BC7 /* rxsnippet */,
 				DF38B7822D61A11100048BC7 /* rxsnippetTests */,
 				DF38B78C2D61A11100048BC7 /* rxsnippetUITests */,
@@ -116,6 +125,10 @@
 			packageProductDependencies = (
 				DF62DB6A2D61AA5E008CA13B /* Common */,
 				DF62DB6D2D61AA6B008CA13B /* JSEngine */,
+				DF07EC112E265A32003ED2C1 /* JSONSchemaForm */,
+				DF07EC142E265A4A003ED2C1 /* JSEngine */,
+				DF07EC162E265A4A003ED2C1 /* JSEngineMacro */,
+				DF07EC182E265A4A003ED2C1 /* RxClipsCore */,
 			);
 			productName = rxsnippet;
 			productReference = DF38B76E2D61A11000048BC7 /* rxsnippet.app */;
@@ -200,6 +213,8 @@
 			mainGroup = DF38B7652D61A11000048BC7;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				DF07EC102E265A32003ED2C1 /* XCRemoteSwiftPackageReference "swift-jsonschema-form" */,
+				DF07EC132E265A4A003ED2C1 /* XCRemoteSwiftPackageReference "rxclips-core" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = DF38B76F2D61A11000048BC7 /* Products */;
@@ -598,7 +613,46 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		DF07EC102E265A32003ED2C1 /* XCRemoteSwiftPackageReference "swift-jsonschema-form" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sirily11/swift-jsonschema-form";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		DF07EC132E265A4A003ED2C1 /* XCRemoteSwiftPackageReference "rxclips-core" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rxtech-lab/rxclips-core";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		DF07EC112E265A32003ED2C1 /* JSONSchemaForm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DF07EC102E265A32003ED2C1 /* XCRemoteSwiftPackageReference "swift-jsonschema-form" */;
+			productName = JSONSchemaForm;
+		};
+		DF07EC142E265A4A003ED2C1 /* JSEngine */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DF07EC132E265A4A003ED2C1 /* XCRemoteSwiftPackageReference "rxclips-core" */;
+			productName = JSEngine;
+		};
+		DF07EC162E265A4A003ED2C1 /* JSEngineMacro */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DF07EC132E265A4A003ED2C1 /* XCRemoteSwiftPackageReference "rxclips-core" */;
+			productName = JSEngineMacro;
+		};
+		DF07EC182E265A4A003ED2C1 /* RxClipsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DF07EC132E265A4A003ED2C1 /* XCRemoteSwiftPackageReference "rxclips-core" */;
+			productName = RxClipsCore;
+		};
 		DF62DB6A2D61AA5E008CA13B /* Common */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Common;
