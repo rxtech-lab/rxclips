@@ -69,6 +69,8 @@ Uses Swift Data for storing:
 - **rxclips-core** (`../rxclips-core`): Template processing and execution engine
 - **swift-jsonschema-form** (`../swift-jsonschema-form`): Dynamic form generation from JSON Schema
 
+Don't copy the code to this folder since they are installed through swift package and I only mention these repos just to let u know how to use them.
+
 # User Experience Design
 
 ## Navigation Structure

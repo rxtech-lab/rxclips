@@ -13,9 +13,11 @@ This is a macOS SwiftUI application called "rxsnippet" that allows users to crea
 
 ### Building the Project
 
+Remember to build the project after implementation
+
 ```bash
 # Build the project (use Xcode or xcodebuild)
-xcodebuild -project rxsnippet.xcodeproj -scheme rxsnippet build
+xcodebuild -scheme rxsnippet -destination 'platform=macOS' build
 
 # Run the app
 open rxsnippet.xcodeproj
@@ -27,10 +29,6 @@ open rxsnippet.xcodeproj
 # Run all tests using the test plan
 xcodebuild -project rxsnippet.xcodeproj -testPlan rxsnippet test
 
-# Run specific test targets
-xcodebuild -project rxsnippet.xcodeproj -scheme rxsnippet -only-testing:rxsnippetTests test
-xcodebuild -project rxsnippet.xcodeproj -scheme rxsnippet -only-testing:JSEngineTests test
-xcodebuild -project rxsnippet.xcodeproj -scheme rxsnippet -only-testing:JSEngineMacroTests test
 ```
 
 ## Architecture Automatically handles async function wrapping with Promise support
@@ -113,3 +111,4 @@ The app depends on external libraries that should be located at:
 
 - `../rxclips-core` - Core clipping functionality
 - `../swift-jsonschema-form` - JSON schema form rendering
+
