@@ -6,11 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		DF62DB6B2D61AA5E008CA13B /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = DF62DB6A2D61AA5E008CA13B /* Common */; };
-		DF62DB6E2D61AA6B008CA13B /* JSEngine in Frameworks */ = {isa = PBXBuildFile; productRef = DF62DB6D2D61AA6B008CA13B /* JSEngine */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		DF38B7802D61A11100048BC7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -35,22 +30,9 @@
 		DFD386062D636BF300E51243 /* rxsnippet.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = rxsnippet.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		DF62DB192D61A1CC008CA13B /* Exceptions for "rxsnippet" folder in "rxsnippet" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				packages/JSEngine,
-			);
-			target = DF38B76D2D61A11000048BC7 /* rxsnippet */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DF38B7702D61A11000048BC7 /* rxsnippet */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				DF62DB192D61A1CC008CA13B /* Exceptions for "rxsnippet" folder in "rxsnippet" target */,
-			);
 			path = rxsnippet;
 			sourceTree = "<group>";
 		};
@@ -71,8 +53,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF62DB6B2D61AA5E008CA13B /* Common in Frameworks */,
-				DF62DB6E2D61AA6B008CA13B /* JSEngine in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,8 +200,6 @@
 			mainGroup = DF38B7652D61A11000048BC7;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				DF62DB692D61AA5E008CA13B /* XCLocalSwiftPackageReference "rxsnippet/packages/Common" */,
-				DF62DB6C2D61AA6B008CA13B /* XCLocalSwiftPackageReference "rxsnippet/packages/JSEngine" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = DF38B76F2D61A11000048BC7 /* Products */;
@@ -619,17 +597,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		DF62DB692D61AA5E008CA13B /* XCLocalSwiftPackageReference "rxsnippet/packages/Common" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = rxsnippet/packages/Common;
-		};
-		DF62DB6C2D61AA6B008CA13B /* XCLocalSwiftPackageReference "rxsnippet/packages/JSEngine" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = rxsnippet/packages/JSEngine;
-		};
-/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		DF62DB6A2D61AA5E008CA13B /* Common */ = {

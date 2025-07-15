@@ -9,15 +9,9 @@ import SwiftUI
 
 @main
 struct rxsnippetApp: App {
-    @State private var engine = Engine()
-
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .onAppear {
-                    engine.initialize()
-                }
-                .environment(engine)
         }
     }
 }
